@@ -48,7 +48,7 @@ jobs:
         run: |
           cd pilets/accountdetails
           npx pilet build '../*' --type manifest
-          cp -r dist/* ../appshell/dist/release/
+          cp -r dist/* ../../appshell/dist/release/
           cd ../..
       - name: Deploy Website
         run: |
