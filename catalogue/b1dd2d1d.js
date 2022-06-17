@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkpr_catalogue=self.webpackChunkpr_catalogue||[]).push([[652],{652:(e,t,a)=>{a.r(t),a.d(t,{"default":()=>l});var r=a(954),c=a(880);const l=function(){var e=(0,c.useParams)().productId;return r.createElement("div",null,"Details page, product id: ".concat(e),r.createElement("br",null),r.createElement(c.Link,{to:"/shop"},"All products"))}}}]);
+//# sourceMappingURL=b1dd2d1d.js.map
