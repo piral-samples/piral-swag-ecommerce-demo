@@ -1,0 +1,55 @@
+name: Publish Demo
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: "14.x"
+          registry-url: "https://registry.npmjs.org"
+      - name: Install Yarn and gh-pages
+        run: |
+          npm install -g yarn
+          npm install -g gh-pages@3.0.0
+      - name: Install Dependencies
+        run: |
+          cd appshell
+          npm i
+          cd ../pilets/accountdetails
+          npm i
+          cd ../catalogue
+          npm i
+          cd ../myaccount
+          npm i
+          cd ../paymentdetails
+          npm i
+          cd ../signin
+          npm i
+          cd ../..
+      - name: Build App Shell
+        run: |
+          cd appshell
+          npx piral build --type release
+          echo "swag-ecommerce.samples.piral.cloud" > dist/release/CNAME
+          cp dist/release/index.html dist/release/404.html
+          cd ..
+      - name: Build Pilets
+        run: |
+          cd pilets/accountdetails
+          npx pilet build '../*' --type manifest
+          cp -r dist/* ../appshell/dist/release/
+          cd ../..
+      - name: Deploy Website
+        run: |
+          git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+          gh-pages -d "appshell/dist/release" -u "github-actions-bot <support+actions@github.com>"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
