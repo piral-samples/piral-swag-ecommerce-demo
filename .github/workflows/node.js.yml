@@ -37,7 +37,7 @@ jobs:
       - name: Build App Shell
         run: |
           cd appshell
-          npx piral build --type release
+          npx piral build
           echo "swag-ecommerce.samples.piral.cloud" > dist/release/CNAME
           cp dist/release/index.html dist/release/404.html
           cd ..
